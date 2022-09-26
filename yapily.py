@@ -217,8 +217,8 @@ driver.get("https://accounts.yapily.com/login")
 
 username = driver.find_element("name", "email")
 password = driver.find_element("name", "password")
-username.send_keys("bernardtctest@gmail.com")
-password.send_keys("T@n1@m082")
+username.send_keys("")
+password.send_keys("")
 driver.find_element(By.CLASS_NAME, "button-text").click()
 
 time.sleep(1)
