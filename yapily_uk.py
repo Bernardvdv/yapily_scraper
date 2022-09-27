@@ -1,5 +1,3 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 import csv
 import time
 import constants
@@ -13,10 +11,19 @@ from selenium.webdriver.common.keys import Keys
 
 def get_values():
     details = {}
-    for i in range(208):
+    for i in range(12):
         try:
             for x in range(10):
+                time.sleep(2)
+                driver.find_element(By.ID, "dialogButton").click()
                 time.sleep(1)
+                driver.find_elements(By.XPATH, '//*[@id="button"]')[1].click()
+                time.sleep(1)
+                driver.find_elements(By.XPATH, '//*[@id="dropdown-content"]/div[2]/div[1]')[1].click()
+                time.sleep(1)
+                driver.find_element(By.XPATH, '//*[@id="filterDialog"]/div[2]/div/footer/button[2]').click()
+                time.sleep(1)
+                time.sleep(2)
                 input_number = driver.find_element(By.NAME, 'pageNumber')
                 input_number.clear()
                 input_number.send_keys(str(i))
@@ -29,6 +36,7 @@ def get_values():
                 driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.CONTROL + Keys.HOME)
                 table = driver.find_element(By.XPATH, "//table[@data-test-id='table-insitutions']")
                 rows = table.find_elements(By.XPATH, ".//tr")
+                print(len(rows))
                 time.sleep(1)
                 rows[x].click()
                 time.sleep(1)
@@ -37,7 +45,6 @@ def get_values():
 
                 try:
                     bank_name = soup2.find("div", {"class": "detail-content-name"}).text.strip()
-                    # bank_name = name
                 except:
                     bank_name = "Not Found"
                     pass
@@ -112,7 +119,8 @@ def get_values():
                 details[bank_name]['AIS'] = ais
                 details[bank_name]['Countries'] = countries
                 driver.back()
-        except:
+        except Exception as e:
+            print(e)
             pass
 
     return details
